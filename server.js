@@ -80,7 +80,8 @@ app.get('/profile/:id', (req, resp) => {
 })
 
 // Image
-app.post('/image', (req, resp) => {
+// Put request as updating user information
+app.put('/image', (req, resp) => {
     const { id } = req.body;
     let found = false;
     database.users.forEach(user => {
