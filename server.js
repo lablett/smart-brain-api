@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
 
 const app = express();
 
 // To initialise middleware
 app.use(bodyParser.json());
+app.use(cors());
 
 // Temporary 'database'
 const database = {
@@ -33,6 +36,13 @@ const database = {
             entries: 0,
             joined: new Date()
         }
+    ],
+    login: [
+        {
+            id: '978',
+            has: '',
+            email: 'john@gmail.com'
+        }
     ]
 }
 
@@ -42,12 +52,12 @@ app.get('/', (req, resp) => {
 
 // Sign in user request
 app.post('/sign-in', (req, resp) => {
-    // JSON response string
+        // JSON response string
     // Check against database
     // Use body-parser to access info
     if (req.body.email === database.users[0].email &&
         req.body.password === database.users[0].password){
-        resp.json('success')
+        resp.json(database.users[0])
     } else {
         resp.status(400).json('Error signing in')
     }
@@ -87,8 +97,10 @@ app.post('/image', (req, resp) => {
 })
 
 // New user request
+// TODO: remove password response
 app.post('/register', (req, resp) => {
     const { email, name, password } = req.body;
+
     database.users.push({
         id: '124',
         name: name,
@@ -101,16 +113,19 @@ app.post('/register', (req, resp) => {
     resp.json(database.users[database.users.length-1])
 });
 
+
+// bcrypt.hash(password, null, null, function(err, hash) {
+    //     console.log(hash);
+    // });
+// Load hash from your password DB.
+// bcrypt.compare("bacon", hash, function(err, res) {
+//     // res == true
+// });
+// bcrypt.compare("veggies", hash, function(err, res) {
+//     // res = false
+// });
+
+
 app.listen(3000, () => {
     console.log('App is running on port 3000')
 });
-
-/*
-
-// res --> this is working]
-// signin --> POST = success/fail
-// register --> POST = user
-// profile/:userID --> GET = user
-// image --> PUT --> user/count
-
-*/
