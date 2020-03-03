@@ -25,7 +25,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/', (req, resp) => { resp.send(database.users) });
+app.get('/', (req, resp) => { resp.send(
+  //database.users)
+  'it is working!')
+});
 
 // Sign in user request
 app.post('/sign-in', (req, resp) => { signin.handleSignIn(req, resp, db, bcrypt) });
@@ -42,5 +45,5 @@ app.post('/imageURL', (req, resp) => { image.handleAPICall(req, resp) });
 app.post('/register', (req, resp) => { register.handleRegister(req, resp, db, bcrypt) }); // Dependency injection
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log('App is running on port 3000')
+    console.log(`App is running on port ${process.env.PORT}`)
 });
