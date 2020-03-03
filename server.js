@@ -25,21 +25,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/', (req, resp) => {
-    resp.send(database.users)
-});
+app.get('/', (req, resp) => { resp.send(database.users) });
 
 // Sign in user request
 app.post('/sign-in', (req, resp) => { signin.handleSignIn(req, resp, db, bcrypt) });
     
 // Grab user id
 // Future profile page?
-app.get('/profile/:id', (req, resp) => { profile.handleProfile(req, resp, db) });
+app.get('/profile/:id', (req, resp) => { profile.handleProfileGet(req, resp, db) });
 
 // Image
 // Put request as updating user information
-app.put('/image', (req, resp) => { Image.handleImage(req, resp, db) });
-
+app.put('/image', (req, resp) => { image.handleImage(req, resp, db) });
+app.post('/imageURL', (req, resp) => { image.handleAPICall(req, resp) });
 // New user request
 app.post('/register', (req, resp) => { register.handleRegister(req, resp, db, bcrypt) }); // Dependency injection
 
