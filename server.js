@@ -41,6 +41,6 @@ app.post('/imageURL', (req, resp) => { image.handleAPICall(req, resp) });
 // New user request
 app.post('/register', (req, resp) => { register.handleRegister(req, resp, db, bcrypt) }); // Dependency injection
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('App is running on port 3000')
 });
